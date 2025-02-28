@@ -1,0 +1,1 @@
+docker-compose -p infra-jsonconverter up master_postgres
