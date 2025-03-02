@@ -19,9 +19,14 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web-services")
+	implementation("org.springframework:spring-orm:6.0.8")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	/**
+	 * Hibernate
+	 */
+	implementation("org.hibernate:hibernate-core:6.2.5.Final")
 
 	/**
 	 * Swagger
