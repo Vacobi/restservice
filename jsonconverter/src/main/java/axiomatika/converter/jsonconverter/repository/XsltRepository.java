@@ -1,13 +1,13 @@
 package axiomatika.converter.jsonconverter.repository;
 
-import axiomatika.converter.jsonconverter.entity.Json;
+import axiomatika.converter.jsonconverter.entity.Xslt;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class XsltRepository extends CRUDRepository<Json, Long> {
+public class XsltRepository extends CRUDRepository<Xslt, Long> {
 
     public XsltRepository(SessionFactory sessionFactory) {
-        super(sessionFactory, Json.class);
+        super(sessionFactory, Xslt.class);
     }
 }
