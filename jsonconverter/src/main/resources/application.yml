@@ -11,8 +11,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     show-sql: true
+    format-sql: true
+    package-to-scan: axiomatika.converter.jsonconverter
     properties:
       hibernate:
         format_sql: true
