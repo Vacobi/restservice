@@ -81,5 +81,20 @@ public class RestJsonService {
     private String decode(String encoded) {
         return StringEscapeUtils.unescapeXml(encoded);
     }
+
+    private String extractBodyOfSoapResponse(String soapResponse) {
+        JSONObject bodyOfResponseByObj = XML.toJSONObject(soapResponse);
+        String bodyOfResponse;
+        try {
+            bodyOfResponse = bodyOfResponseByObj.getJSONObject("SOAP-ENV:Envelope")
+                    .getJSONObject("SOAP-ENV:Body")
+                    .getJSONObject("ns2:getXsltResponse")
+                    .getString("ns2:xsltResult");
+        } catch (Exception e) {
+            throw new RuntimeException("", e);
+        }
+
+        return bodyOfResponse;
+    }
 }
 
