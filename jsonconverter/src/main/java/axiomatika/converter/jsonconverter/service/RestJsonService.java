@@ -4,6 +4,7 @@ import axiomatika.converter.jsonconverter.entity.Json;
 import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -75,6 +76,10 @@ public class RestJsonService {
            </soapenv:Body>
         </soapenv:Envelope>
         """, SOAP_REQUEST_URI, xml);
+    }
+
+    private String decode(String encoded) {
+        return StringEscapeUtils.unescapeXml(encoded);
     }
 }
 
