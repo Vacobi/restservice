@@ -64,9 +64,9 @@ public class RestJsonService {
     }
 
     private String buildSoapRequest(String xml) {
-        return """
+        return String.format("""
         <?xml version="1.0" encoding="UTF-8"?>
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:axi="http://localhost:8081/ws/server">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:axi="%s">
            <soapenv:Header/>
            <soapenv:Body>
               <axi:getXsltRequest>
@@ -74,7 +74,7 @@ public class RestJsonService {
               </axi:getXsltRequest>
            </soapenv:Body>
         </soapenv:Envelope>
-        """.formatted(xml);
+        """, SOAP_REQUEST_URI, xml);
     }
 }
 
