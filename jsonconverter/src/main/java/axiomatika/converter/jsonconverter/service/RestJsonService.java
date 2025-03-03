@@ -57,7 +57,12 @@ public class RestJsonService {
             request.setEntity(new StringEntity(buildSoapRequest(xml), "UTF-8"));
             try (CloseableHttpResponse response = client.execute(request)) {
                 HttpEntity entity = response.getEntity();
-                return entity != null ? EntityUtils.toString(entity, "UTF-8") : null;
+                if (entity != null) {
+                    String soapResponse = EntityUtils.toString(entity, "UTF-8");
+                    String codedBodyOfSoapResponse = extractBodyOfSoapResponse(soapResponse);
+                    return decode(codedBodyOfSoapResponse);
+                }
+                return null;
             }
         } catch (Exception e) {
             throw new RuntimeException("SOAP service is unreachable", e);
