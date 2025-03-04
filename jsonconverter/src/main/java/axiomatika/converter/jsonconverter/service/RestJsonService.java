@@ -1,5 +1,6 @@
 package axiomatika.converter.jsonconverter.service;
 
+import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.Json;
 import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
@@ -31,16 +32,21 @@ public class RestJsonService {
     }
 
     @Transactional
-    public String convertToXslt(String json) {
+    public ConvertToXsltResult convertToXslt(String json) {
+        ConvertToXsltResult result = new ConvertToXsltResult();
+
         Json jsonEntity = jsonRepository.save(new Json(json));
+        result.setJsonId(jsonEntity.getId());
 
         String xml = "<person>" + toXml(jsonEntity) + "</person>";
 
         String xslt = toXslt(xml);
 
-        xsltRepository.save(new Xslt(xslt));
+        Xslt xsltEntity = xsltRepository.save(new Xslt(xslt));
+        result.setXsltId(xsltEntity.getId());
+        result.setResult(xslt);
 
-        return xslt;
+        return result;
     }
 
     private String toXml(Json json) {
