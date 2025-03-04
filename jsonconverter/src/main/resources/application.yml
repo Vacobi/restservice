@@ -19,5 +19,9 @@ spring:
       hibernate:
         format_sql: true
 
+  soap-service-connection:
+    soap_request_uri: http://localhost:8081/ws/server
+    charset: UTF-8
+
 server:
   port: 8080
