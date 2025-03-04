@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static testutils.TestAsserts.assertTagsInXmlStringsAreEqualsWithoutOrder;
 
 @SpringBootTest
@@ -63,6 +64,14 @@ class RestJsonServiceTest {
         // Content
         assertTagsInXmlStringsAreEqualsWithoutOrder(expXslt, actualConverted.getResult());
 
-        assertTagsInXmlStringsAreEqualsWithoutOrder(expXml, actualXml);
+        // Json Rep
+        assertTrue(jsonRepository.findById(actualConverted.getJsonId()).isPresent());
+        Json actualJson = jsonRepository.findById(actualConverted.getJsonId()).get();
+        assertEquals(jsonString, actualJson.getContent());
+
+        // Xslt Rep
+        assertTrue(xsltRepository.findById(actualConverted.getXsltId()).isPresent());
+        Xslt actualXslt = xsltRepository.findById(actualConverted.getXsltId()).get();
+        assertEquals(expXslt, actualXslt.getContent());
     }
 }
