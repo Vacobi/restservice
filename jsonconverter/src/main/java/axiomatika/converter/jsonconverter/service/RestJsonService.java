@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +25,17 @@ public class RestJsonService {
     private final JsonRepository jsonRepository;
     private final XsltRepository xsltRepository;
 
-    private final String SOAP_REQUEST_URI = "http://localhost:8081/ws/server";
+    private final String SOAP_REQUEST_URI;
+    private final String charset;
 
-    public RestJsonService(JsonRepository jsonRepository, XsltRepository xsltRepository) {
+    public RestJsonService(JsonRepository jsonRepository,
+                           XsltRepository xsltRepository,
+                           @Qualifier("soapRequestUri") String SOAP_REQUEST_URI,
+                           @Qualifier("charset") String charset) {
         this.jsonRepository = jsonRepository;
         this.xsltRepository = xsltRepository;
+        this.SOAP_REQUEST_URI = SOAP_REQUEST_URI;
+        this.charset = charset;
     }
 
     @Transactional
@@ -58,13 +65,13 @@ public class RestJsonService {
     private String toXslt(String xml) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(SOAP_REQUEST_URI);
-            request.setHeader("Content-Type", "text/xml; charset=UTF-8");
+            request.setHeader("Content-Type", String.format("text/xml; charset=%s", charset));
             request.setHeader("SOAPAction", SOAP_REQUEST_URI);
-            request.setEntity(new StringEntity(buildSoapRequest(xml), "UTF-8"));
+            request.setEntity(new StringEntity(buildSoapRequest(xml), charset));
             try (CloseableHttpResponse response = client.execute(request)) {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    String soapResponse = EntityUtils.toString(entity, "UTF-8");
+                    String soapResponse = EntityUtils.toString(entity, charset);
                     String codedBodyOfSoapResponse = extractBodyOfSoapResponse(soapResponse);
                     return decode(codedBodyOfSoapResponse);
                 }
