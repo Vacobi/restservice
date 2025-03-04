@@ -1,5 +1,8 @@
 package axiomatika.converter.jsonconverter.controller;
 
+import axiomatika.converter.jsonconverter.dto.ConvertResponseDto;
+import axiomatika.converter.jsonconverter.dto.ConvertRequestDto;
+import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.service.RestJsonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +23,8 @@ public class RestServiceController {
     }
 
     @PostMapping
-    public String convert(@RequestBody String json) {
-        return restJsonService.convertToXslt(json);
+    public ConvertResponseDto convert(@RequestBody ConvertRequestDto json) {
+        ConvertToXsltResult converted = restJsonService.convertToXslt(json.getData());
+        return new ConvertResponseDto(converted.getResult());
     }
 }
