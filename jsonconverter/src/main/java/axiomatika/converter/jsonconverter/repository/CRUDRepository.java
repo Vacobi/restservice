@@ -28,12 +28,6 @@ public abstract class CRUDRepository<E, ID extends Serializable> {
     }
 
     @Transactional
-    public E update(E entity) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.merge(entity);
-    }
-
-    @Transactional
     public void delete(E entity) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(entity);
