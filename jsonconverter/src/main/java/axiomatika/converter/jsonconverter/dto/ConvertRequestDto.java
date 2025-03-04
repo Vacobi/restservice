@@ -1,8 +1,5 @@
 package axiomatika.converter.jsonconverter.dto;
 
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
 public class ConvertRequestDto {
     private String data;
 
