@@ -1,7 +1,10 @@
 package axiomatika.converter.jsonconverter.builder;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -67,5 +70,19 @@ public class SoapMessagesBuilder {
         }
 
         return bodyOfResponse;
+    }
+
+    public String extractBodyOfSoapResponse(CloseableHttpResponse response) {
+        HttpEntity entity = response.getEntity();
+        if (entity == null) {
+            return null;
+        }
+
+        try {
+            String soapResponse = EntityUtils.toString(entity, charset);
+            return extractBodyOfSoapResponse(soapResponse);
+        } catch (Exception e) {
+            throw new RuntimeException("a");
+        }
     }
 }

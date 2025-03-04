@@ -7,15 +7,12 @@ import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
 import org.apache.commons.text.StringEscapeUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.XML;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,17 +22,13 @@ public class RestJsonService {
     private final JsonRepository jsonRepository;
     private final XsltRepository xsltRepository;
 
-    private final String charset;
-
     private final SoapMessagesBuilder soapMessagesBuilder;
 
     public RestJsonService(JsonRepository jsonRepository,
                            XsltRepository xsltRepository,
-                           @Qualifier("charset") String charset,
                            SoapMessagesBuilder soapMessagesBuilder) {
         this.jsonRepository = jsonRepository;
         this.xsltRepository = xsltRepository;
-        this.charset = charset;
         this.soapMessagesBuilder = soapMessagesBuilder;
     }
 
@@ -67,13 +60,12 @@ public class RestJsonService {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost request = soapMessagesBuilder.buildXMLSoapRequest(xml);
             try (CloseableHttpResponse response = client.execute(request)) {
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    String soapResponse = EntityUtils.toString(entity, charset);
-                    String codedBodyOfSoapResponse = soapMessagesBuilder.extractBodyOfSoapResponse(soapResponse);
-                    return decode(codedBodyOfSoapResponse);
+                String codedBodyOfSoapResponse = soapMessagesBuilder.extractBodyOfSoapResponse(response);;
+                if (codedBodyOfSoapResponse == null) {
+                    return null;
                 }
-                return null;
+
+                return decode(codedBodyOfSoapResponse);
             }
         } catch (Exception e) {
             throw new RuntimeException("SOAP service is unreachable", e);
