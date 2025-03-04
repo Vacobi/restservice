@@ -37,4 +37,12 @@ public class Json {
     public String getContent() {
         return content;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Json json = (Json) o;
+        return id.equals(json.id) && content.equals(json.content);
+    }
 }
