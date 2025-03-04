@@ -16,6 +16,7 @@ import static testutils.TestAsserts.assertTagsInXmlStringsAreEqualsWithoutOrder;
 @ContextConfiguration(initializers = TestContainersConfig.class)
 class RestJsonServiceTest {
 
+    @Autowired
     private JsonRepository jsonRepository;
 
     @Autowired
