@@ -5,6 +5,7 @@ import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.Json;
 import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
+import axiomatika.converter.jsonconverter.repository.XsltRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,9 @@ class RestJsonServiceTest {
 
     @Autowired
     private JsonRepository jsonRepository;
+
+    @Autowired
+    private XsltRepository xsltRepository;
 
     @Autowired
     private RestJsonService restJsonService;
