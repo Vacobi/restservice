@@ -1,6 +1,9 @@
 package axiomatika.converter.jsonconverter.service;
 
 import axiomatika.converter.jsonconverter.config.TestContainersConfig;
+import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
+import axiomatika.converter.jsonconverter.entity.Json;
+import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,10 @@ class RestJsonServiceTest {
                     </document>
                 </person>""";
 
-        String actualXml = restJsonService.convertToXslt(jsonString);
+        ConvertToXsltResult actualConverted = restJsonService.convertToXslt(jsonString);
+
+        // Content
+        assertTagsInXmlStringsAreEqualsWithoutOrder(expXslt, actualConverted.getResult());
 
         assertTagsInXmlStringsAreEqualsWithoutOrder(expXml, actualXml);
     }
