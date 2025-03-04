@@ -2,7 +2,7 @@ package axiomatika.converter.jsonconverter.service;
 
 import axiomatika.converter.jsonconverter.builder.SoapMessagesBuilder;
 import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
-import axiomatika.converter.jsonconverter.entity.Json;
+import axiomatika.converter.jsonconverter.entity.JsonEntity;
 import axiomatika.converter.jsonconverter.entity.Xslt;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
@@ -36,7 +36,7 @@ public class RestJsonService {
     public ConvertToXsltResult convertToXslt(String json) {
         ConvertToXsltResult result = new ConvertToXsltResult();
 
-        Json jsonEntity = jsonRepository.save(new Json(json));
+        JsonEntity jsonEntity = jsonRepository.save(new JsonEntity(json));
         result.setJsonId(jsonEntity.getId());
 
         String xml = "<person>" + toXml(jsonEntity) + "</person>";
@@ -50,7 +50,7 @@ public class RestJsonService {
         return result;
     }
 
-    private String toXml(Json json) {
+    private String toXml(JsonEntity json) {
         JSONObject jsonObject = new JSONObject(json.getContent());
 
         return XML.toString(jsonObject);

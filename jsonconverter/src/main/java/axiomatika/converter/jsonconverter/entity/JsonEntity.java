@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="json")
-public class Json {
+public class JsonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable=false)
@@ -13,15 +13,15 @@ public class Json {
     @Column(name="content", nullable = false)
     private String content;
 
-    public Json() {
+    public JsonEntity() {
         ;
     }
 
-    public Json(String content) {
+    public JsonEntity(String content) {
         this.content = content;
     }
 
-    public Json(Long id, String content) {
+    public JsonEntity(Long id, String content) {
         this.id = id;
         this.content = content;
     }
@@ -42,7 +42,7 @@ public class Json {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Json json = (Json) o;
+        JsonEntity json = (JsonEntity) o;
         return id.equals(json.id) && content.equals(json.content);
     }
 }
