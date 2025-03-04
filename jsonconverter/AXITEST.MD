@@ -1,0 +1,1 @@
+hibernate-core:6.2.5.Final
