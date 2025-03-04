@@ -3,7 +3,7 @@ package axiomatika.converter.jsonconverter.service;
 import axiomatika.converter.jsonconverter.builder.SoapMessagesBuilder;
 import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.JsonEntity;
-import axiomatika.converter.jsonconverter.entity.Xslt;
+import axiomatika.converter.jsonconverter.entity.XsltEntity;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
 import org.apache.commons.text.StringEscapeUtils;
@@ -43,7 +43,7 @@ public class RestJsonService {
 
         String xslt = toXslt(xml);
 
-        Xslt xsltEntity = xsltRepository.save(new Xslt(xslt));
+        XsltEntity xsltEntity = xsltRepository.save(new XsltEntity(xslt));
         result.setXsltId(xsltEntity.getId());
         result.setResult(xslt);
 

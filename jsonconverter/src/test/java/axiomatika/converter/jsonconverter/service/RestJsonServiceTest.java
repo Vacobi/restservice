@@ -3,7 +3,7 @@ package axiomatika.converter.jsonconverter.service;
 import axiomatika.converter.jsonconverter.config.TestContainersConfig;
 import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.JsonEntity;
-import axiomatika.converter.jsonconverter.entity.Xslt;
+import axiomatika.converter.jsonconverter.entity.XsltEntity;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ class RestJsonServiceTest {
 
         // Xslt Rep
         assertTrue(xsltRepository.findById(actualConverted.getXsltId()).isPresent());
-        Xslt actualXslt = xsltRepository.findById(actualConverted.getXsltId()).get();
+        XsltEntity actualXslt = xsltRepository.findById(actualConverted.getXsltId()).get();
         assertEquals(expXslt, actualXslt.getContent());
     }
 }

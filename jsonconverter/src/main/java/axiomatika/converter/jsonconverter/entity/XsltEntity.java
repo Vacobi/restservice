@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="xslt")
-public class Xslt {
+public class XsltEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable=false)
@@ -15,11 +15,11 @@ public class Xslt {
     @Column(name="content", nullable = false)
     private String content;
 
-    public Xslt() {
+    public XsltEntity() {
         ;
     }
 
-    public Xslt(String content) {
+    public XsltEntity(String content) {
         this.content = content;
     }
 
@@ -39,7 +39,7 @@ public class Xslt {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Xslt xslt = (Xslt) o;
+        XsltEntity xslt = (XsltEntity) o;
         return Objects.equals(id, xslt.id) && Objects.equals(content, xslt.content);
     }
 }
