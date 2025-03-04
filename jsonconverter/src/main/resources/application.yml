@@ -22,6 +22,10 @@ spring:
   soap-service-connection:
     soap_request_uri: http://localhost:8081/ws/server
     charset: UTF-8
+    soap-request-local-name: getXsltRequest
+    element-name: xmlData
+    soap-response-local-name: getXsltResponse
+    response-element-name: xsltResult
 
 server:
   port: 8080
