@@ -21,6 +21,11 @@ public class Json {
         this.content = content;
     }
 
+    public Json(Long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
     public Long getId() {
         return id;
     }
