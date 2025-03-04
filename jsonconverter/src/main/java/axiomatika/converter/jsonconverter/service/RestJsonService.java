@@ -39,7 +39,8 @@ public class RestJsonService {
         JsonEntity jsonEntity = jsonRepository.save(new JsonEntity(json));
         result.setJsonId(jsonEntity.getId());
 
-        String xml = "<person>" + toXml(jsonEntity) + "</person>";
+        JSONObject jsonObject = new JSONObject(jsonEntity.getContent());
+        String xml = String.format("<person> %s </person>", XML.toString(jsonObject));
 
         String xslt = toXslt(xml);
 
@@ -48,12 +49,6 @@ public class RestJsonService {
         result.setResult(xslt);
 
         return result;
-    }
-
-    private String toXml(JsonEntity json) {
-        JSONObject jsonObject = new JSONObject(json.getContent());
-
-        return XML.toString(jsonObject);
     }
 
     private String toXslt(String xml) {
