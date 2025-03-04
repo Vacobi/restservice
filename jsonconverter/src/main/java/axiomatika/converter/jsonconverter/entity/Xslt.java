@@ -2,6 +2,8 @@ package axiomatika.converter.jsonconverter.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name="xslt")
 public class Xslt {
@@ -31,5 +33,13 @@ public class Xslt {
 
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Xslt xslt = (Xslt) o;
+        return Objects.equals(id, xslt.id) && Objects.equals(content, xslt.content);
     }
 }
