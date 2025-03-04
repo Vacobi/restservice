@@ -44,19 +44,9 @@ class RestJsonServiceTest {
                     },
                 }""";
 
-        String expXml = """
-                <person>
-                    <name>Тест</name>
-                    <surname>Тестов</surname>
-                    <patronymic>Тестович</patronymic>
-                    <birthDate>1990-01-01</birthDate>
-                    <gender>MAN</gender>
-                    <document>
-                        <series>1333</series>
-                        <number>112233</number>
-                        <type>PASSPORT</type>
-                        <issueDate>2020-01-01</issueDate>
-                    </document>
+        String expXslt = """
+                <person name="Тест" surname="Тестов" patronymic="Тестович" birthDate="01.01.1990" gender="MAN">\r
+                    <document series="1333" number="112233" type="PASSPORT" issueDate="01.01.2020"/>\r
                 </person>""";
 
         ConvertToXsltResult actualConverted = restJsonService.convertToXslt(jsonString);
