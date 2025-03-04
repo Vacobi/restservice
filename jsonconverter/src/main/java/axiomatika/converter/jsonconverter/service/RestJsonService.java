@@ -56,15 +56,11 @@ public class RestJsonService {
             HttpPost request = soapMessagesBuilder.buildXMLSoapRequest(xml);
             try (CloseableHttpResponse response = client.execute(request)) {
                 String codedBodyOfSoapResponse = soapMessagesBuilder.extractBodyOfSoapResponse(response);
-                return codedBodyOfSoapResponse == null ? null : decode(codedBodyOfSoapResponse);
+                return codedBodyOfSoapResponse == null ? null : StringEscapeUtils.unescapeXml(codedBodyOfSoapResponse);
             }
         } catch (Exception e) {
             throw new RuntimeException("SOAP service is unreachable", e);
         }
-    }
-
-    private String decode(String encoded) {
-        return StringEscapeUtils.unescapeXml(encoded);
     }
 }
 
