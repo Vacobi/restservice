@@ -82,7 +82,7 @@ public class SoapMessagesHandler {
             String soapResponse = EntityUtils.toString(entity, charset);
             return extractBodyOfSoapResponse(soapResponse);
         } catch (Exception e) {
-            throw new RuntimeException("a");
+            throw new RuntimeException("Error processing SOAP response");
         }
     }
 }
