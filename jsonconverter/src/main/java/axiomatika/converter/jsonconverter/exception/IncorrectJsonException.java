@@ -9,7 +9,7 @@ public class IncorrectJsonException extends BaseClientException {
         super(
                 String.format("Json\n%s\nIs incorrect", incorrectJson),
                 ClientExceptionName.INCORRECT_JSON,
-                HttpStatus.NOT_FOUND
+                HttpStatus.BAD_REQUEST
         );
         this.incorrectJson = incorrectJson;
     }
