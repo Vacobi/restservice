@@ -1,6 +1,7 @@
 package axiomatika.converter.jsonconverter.service;
 
 import axiomatika.converter.jsonconverter.config.TestContainersConfig;
+import axiomatika.converter.jsonconverter.dto.ConvertRequestDto;
 import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.JsonEntity;
 import axiomatika.converter.jsonconverter.entity.XsltEntity;
@@ -49,7 +50,8 @@ class RestJsonServiceTest {
                     <document series="1333" number="112233" type="PASSPORT" issueDate="01.01.2020"/>\r
                 </person>""";
 
-        ConvertToXsltResult actualConverted = restJsonService.convertToXslt(jsonString);
+        ConvertRequestDto convertRequestDto = new ConvertRequestDto(jsonString);
+        ConvertToXsltResult actualConverted = restJsonService.convertToXslt(convertRequestDto);
 
         // Content
         assertTagsInXmlStringsAreEqualsWithoutOrder(expXslt, actualConverted.getResult());
