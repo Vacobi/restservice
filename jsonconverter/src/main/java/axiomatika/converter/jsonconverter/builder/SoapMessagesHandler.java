@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SoapMessagesBuilder {
+public class SoapMessagesHandler {
 
     private final String SOAP_REQUEST_URI;
     private final String charset;
@@ -20,7 +20,7 @@ public class SoapMessagesBuilder {
     private final String soapResponseLocalName;
     private final String responseElementName;
 
-    public SoapMessagesBuilder(@Qualifier("soapRequestUri") String SOAP_REQUEST_URI,
+    public SoapMessagesHandler(@Qualifier("soapRequestUri") String SOAP_REQUEST_URI,
                                @Qualifier("charset") String charset,
                                @Qualifier("soapRequestLocalName") String soapRequestLocalName,
                                @Qualifier("elementName") String elementName,

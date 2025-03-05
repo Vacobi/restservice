@@ -1,9 +1,10 @@
 package axiomatika.converter.jsonconverter.service;
 
-import axiomatika.converter.jsonconverter.builder.SoapMessagesBuilder;
+import axiomatika.converter.jsonconverter.builder.SoapMessagesHandler;
 import axiomatika.converter.jsonconverter.dto.ConvertToXsltResult;
 import axiomatika.converter.jsonconverter.entity.JsonEntity;
 import axiomatika.converter.jsonconverter.entity.XsltEntity;
+import axiomatika.converter.jsonconverter.exception.IncorrectJsonException;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
 import org.apache.commons.text.StringEscapeUtils;
@@ -22,14 +23,14 @@ public class RestJsonService {
     private final JsonRepository jsonRepository;
     private final XsltRepository xsltRepository;
 
-    private final SoapMessagesBuilder soapMessagesBuilder;
+    private final SoapMessagesHandler soapMessagesHandler;
 
     public RestJsonService(JsonRepository jsonRepository,
                            XsltRepository xsltRepository,
-                           SoapMessagesBuilder soapMessagesBuilder) {
+                           SoapMessagesHandler soapMessagesHandler) {
         this.jsonRepository = jsonRepository;
         this.xsltRepository = xsltRepository;
-        this.soapMessagesBuilder = soapMessagesBuilder;
+        this.soapMessagesHandler = soapMessagesHandler;
     }
 
     @Transactional
@@ -53,9 +54,9 @@ public class RestJsonService {
 
     private String toXslt(String xml) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost request = soapMessagesBuilder.buildXMLSoapRequest(xml);
+            HttpPost request = soapMessagesHandler.buildXMLSoapRequest(xml);
             try (CloseableHttpResponse response = client.execute(request)) {
-                String codedBodyOfSoapResponse = soapMessagesBuilder.extractBodyOfSoapResponse(response);
+                String codedBodyOfSoapResponse = soapMessagesHandler.extractBodyOfSoapResponse(response);
                 return codedBodyOfSoapResponse == null ? null : StringEscapeUtils.unescapeXml(codedBodyOfSoapResponse);
             }
         } catch (Exception e) {
