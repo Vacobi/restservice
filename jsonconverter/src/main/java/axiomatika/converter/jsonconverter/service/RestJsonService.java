@@ -40,7 +40,13 @@ public class RestJsonService {
         JsonEntity jsonEntity = jsonRepository.save(new JsonEntity(json));
         result.setJsonId(jsonEntity.getId());
 
-        JSONObject jsonObject = new JSONObject(jsonEntity.getContent());
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(jsonEntity.getContent());
+        }
+        catch (Exception e) {
+            throw new IncorrectJsonException(json);
+        }
         String xml = String.format("<person> %s </person>", XML.toString(jsonObject));
 
         String xslt = toXslt(xml);
