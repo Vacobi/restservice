@@ -8,6 +8,7 @@ import axiomatika.converter.jsonconverter.entity.XsltEntity;
 import axiomatika.converter.jsonconverter.exception.IncorrectJsonException;
 import axiomatika.converter.jsonconverter.repository.JsonRepository;
 import axiomatika.converter.jsonconverter.repository.XsltRepository;
+import axiomatika.converter.jsonconverter.validation.JsonValidator;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -25,17 +26,24 @@ public class RestJsonService {
     private final XsltRepository xsltRepository;
 
     private final SoapMessagesHandler soapMessagesHandler;
+    private final JsonValidator jsonValidator;
 
     public RestJsonService(JsonRepository jsonRepository,
                            XsltRepository xsltRepository,
-                           SoapMessagesHandler soapMessagesHandler) {
+                           SoapMessagesHandler soapMessagesHandler,
+                           JsonValidator jsonValidator) {
         this.jsonRepository = jsonRepository;
         this.xsltRepository = xsltRepository;
         this.soapMessagesHandler = soapMessagesHandler;
+        this.jsonValidator = jsonValidator;
     }
 
     @Transactional
     public ConvertToXsltResult convertToXslt(ConvertRequestDto convertRequestDto) {
+        jsonValidator.validateConvertRequestDto(convertRequestDto).ifPresent(e -> {
+            throw e;
+        });
+
         String json = convertRequestDto.getData();
         ConvertToXsltResult result = new ConvertToXsltResult();
 
