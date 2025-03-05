@@ -23,8 +23,8 @@ public class RestServiceController {
     }
 
     @PostMapping
-    public ConvertResponseDto convert(@RequestBody ConvertRequestDto json) {
-        ConvertToXsltResult converted = restJsonService.convertToXslt(json.getData());
+    public ConvertResponseDto convert(@RequestBody ConvertRequestDto convertRequestDto) {
+        ConvertToXsltResult converted = restJsonService.convertToXslt(convertRequestDto);
         return new ConvertResponseDto(converted.getResult());
     }
 }
