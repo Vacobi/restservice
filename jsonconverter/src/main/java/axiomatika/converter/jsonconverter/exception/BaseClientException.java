@@ -32,4 +32,12 @@ public abstract class BaseClientException extends RuntimeException {
     public Map<String, Object> properties() {
         return new LinkedHashMap<>();
     }
+
+    public ClientExceptionName getExceptionName() {
+        return exceptionName;
+    }
+
+    public HttpStatusCode getStatusCode() {
+        return statusCode;
+    }
 }
