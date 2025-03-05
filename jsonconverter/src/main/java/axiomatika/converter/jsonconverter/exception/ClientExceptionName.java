@@ -1,8 +1,17 @@
 package axiomatika.converter.jsonconverter.exception;
 
 public enum ClientExceptionName {
-    INCORRECT_JSON(
+    VALIDATION_EXCEPTION(
+            800
+    ),
+    GROUP_VALIDATION_EXCEPTION(
             801
+    ),
+    INCORRECT_JSON(
+            802
+    ),
+    INCORRECT_CONVERT_REQUEST(
+            803
     );
 
     private final int apiErrorCode;
